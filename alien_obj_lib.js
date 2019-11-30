@@ -109,8 +109,6 @@ function triangle_obj(x,y,color,size, horizontal_distance, vertical_distance) {
 		}
 	};
 	this.draw = function() {
-
-
 		ctx.drawImage(slowcupcake, this.x , this.y , this.size , this.size)
 	};
 }
@@ -140,7 +138,6 @@ function flower_obj(x,y,color,size) {
 		if (this.dcount > 45) {
 			this.dcount = 0;
 		}
-
 	};
 	this.draw = function() {
 		ctx.beginPath();
@@ -156,5 +153,8 @@ function flower_obj(x,y,color,size) {
 		ctx.fillRect( this.x + (this.size * 4)/8 , this.y + (this.size * 6)/8 , (this.size * 1) / 8 , (this.size * 1) /8 );
 		ctx.stroke();
 	};
+}
+
+function cherry_obj(x,y,droptime) {
 
 }

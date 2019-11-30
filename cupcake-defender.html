@@ -60,6 +60,7 @@ margin: 0 auto;
 <div style="display:none;">
   <img id="fast_cupcake_graphic" src="img/fast_cupcake.png">
   <img id="slow_cupcake_graphic" src="img/slow_cupcake.png">
+  <img id="level1background" src="img/level1background.jpg">
 </div>
 
 </body>
@@ -127,30 +128,37 @@ var thirdwaveInterval;
 
 var game_status = "off";
 // the level variable determines the level that is generated each level up
-var level = 2;
+var level = 1;
 
 // this defines what background will be drawn in the freshbackground function
-// it will be pointing to a specific png file referenced in the html
+// it will be pointing to a specific jpg file referenced in the html
 var backgroundgraphic;
 
 //  would love to have this retained as a cookie or server-side storage
 var high_score = 1000;
 
+var storytext = [];
+
+storytext[0] = "Cupcakes are attacking the VeggieVille!";
+storytext[1] = "Protect your town from the destruction of simple carbohydrates\!";
+storytext[2] = "The first wave of cupcakes is vanquished, but more are coming. \n The battle is not over, watch out for incoming cones\!";
+storytext[3] = "Time to take the fight to the cupcakes home planet.  You have landed on a sea of frosting, The elite Pie Guard forces are defending Cupcake Castle!";
 
 // I could have the freshBackground function mutable from a series of functions to set different
 // level backgrounds
 
 function freshBackground() {
-	ctx.beginPath();
-	ctx.fillStyle="black";
-	ctx.fillRect(0,0,gamescreenwidth,gamescreenheight-80);
-	ctx.stroke();
-	ctx.beginPath();
-	ctx.strokeStyle="green";
-	ctx.lineWidth="5";
-	ctx.fillStyle="green";
-	ctx.fillRect(0,gamescreenheight-80,gamescreenwidth-10,90);
-	ctx.stroke();
+	ctx.drawImage(backgroundgraphic,0,0,gamescreenwidth,gamescreenheight)
+	// ctx.beginPath();
+	// ctx.fillStyle="black";
+	// ctx.fillRect(0,0,gamescreenwidth,gamescreenheight-80);
+	// ctx.stroke();
+	// ctx.beginPath();
+	// ctx.strokeStyle="green";
+	// ctx.lineWidth="5";
+	// ctx.fillStyle="green";
+	// ctx.fillRect(0,gamescreenheight-80,gamescreenwidth-10,90);
+	// ctx.stroke();
 
 // draw game info
 	ctx.font = "32px Arial";
@@ -188,42 +196,60 @@ function levelUp() {
 	clearInterval(gameInterval);
 
 //PUT STORY TRANSITION CODE HERE
+	ctx.beginPath();
+	ctx.fillStyle="black";
+	ctx.fillRect(0,0,gamescreenwidth,gamescreenheight-80);
+	ctx.stroke();
+	ctx.font = "24px Arial";
+	ctx.fillStyle="gray";
+	ctx.fillText(storytext[level], 180, 100);
+//	ctx.fillText("           ", 180, 150);
+//	ctx.fillText("           ", 180, 200);
+//	ctx.fillText("           ", 180, 350);
+//	ctx.fillText("           ", 180, 400);
+	ctx.stroke();
 
-//CHANGE BACKGROUND GRAPHIC
 
-//CREATE CODE FOR EACH LEVEL USING THIS FORMAT
 
-	//create basic aliens
 
-	for (i = 0; i < level ;  i++) {
-		color_name = randomColor();
-		size = randomNumber(35,79);
-		horizontal_distance = randomNumber(25,200);
-		vertical_distance = randomNumber(3,10);
-		aliens[aliens.length] = new alien_obj(i * 120 + 80 ,40, color_name, size, horizontal_distance , vertical_distance);
-	}
+//set a timeout function to delay the start of the new levels
+	setTimeout(function(){
+		//CREATE CODE FOR EACH LEVEL USING THIS FORMAT
 
-	//create triangles
+	    //CHANGE BACKGROUND GRAPHIC
+			backgroundgraphic = document.getElementById('level1background');
+		//create basic aliens
 
-	secondwaveInterval = setTimeout (function() {
-		size = randomNumber(25,30);
-		color_name = randomColor();
-		for (i = 0; i < 3 ; i++) {
-			aliens[aliens.length] = new triangle_obj(800 - i * 120 ,2, color_name, size, horizontal_distance , 5);
-		}
-	}, 7000);
-
-	// create flowers
-	thirdwaveInterval = setTimeout(function() {
-		size = randomNumber(50,80);
-		flower_count = 10;
-		for (i = 0; i < flower_count; i = i + 1) {
+		for (i = 0; i < 5 ;  i++) {
 			color_name = randomColor();
-			aliens[aliens.length] = new flower_obj(gamescreenwidth-100 - (i* 120), (level * 2), color_name, size);
+			size = randomNumber(35,79);
+			horizontal_distance = randomNumber(25,200);
+			vertical_distance = randomNumber(3,10);
+			aliens[aliens.length] = new alien_obj(i * 120 + 80 ,40, color_name, size, horizontal_distance , vertical_distance);
 		}
-	}, 14000);
 
-	gameInterval = setInterval(gameloop, 30);
+		//create triangles
+
+		secondwaveInterval = setTimeout (function() {
+			size = randomNumber(25,30);
+			color_name = randomColor();
+			for (i = 0; i < 3 ; i++) {
+				aliens[aliens.length] = new triangle_obj(800 - i * 120 ,2, color_name, size, horizontal_distance , 5);
+			}
+		}, 7000);
+
+		// create flowers
+		thirdwaveInterval = setTimeout(function() {
+			size = randomNumber(50,80);
+			flower_count = 10;
+			for (i = 0; i < flower_count; i = i + 1) {
+				color_name = randomColor();
+				aliens[aliens.length] = new flower_obj(gamescreenwidth-100 - (i* 120), (level * 2), color_name, size);
+			}
+		}, 14000);
+
+		gameInterval = setInterval(gameLoop, 30);
+	}, 5000);
 }
 
 
@@ -337,6 +363,7 @@ function gameStart() {
 
 
 	points = 0;
+	backgroundgraphic=document.getElementById('level1background');
 	clearInterval(gameInterval);
 	clearInterval(attackInterval);
 	clearInterval(itemInterval);
@@ -358,24 +385,10 @@ function gameStart() {
 		items.length = 0;
 		aliens.length = 0;
 		shots.length = 0;
-		trees.length = 0;
-		level = 2;
+		level = 1;
 		points = 0;
 		game_status = "on";
 
-		for (i = 0; i < 5; i = i + 1) {
-			xloc = Math.floor(Math.random()*(gamescreenwidth-200)) + 200;
-			yloc = Math.floor(Math.random()*11) + gamescreenheight-115;
-			size = randomNumber(70,80);
-			trees[i] = [];
-			trees[i].xloc = xloc;
-			trees[i].yloc = yloc;
-			trees[i].size = size;
-		}
-		for (i = 0; i < 3; i = i + 1) {
-			xloc = randomNumber(70,gamescreenwidth-100)
-			mountains[i] = xloc;
-		}
 		//create first wave of basic aliens
 		for (i = 0; i < 5; i++) {
 			aliens[i] = new alien_obj(i * 140 + 300 ,120, "green", 60,50, 4);

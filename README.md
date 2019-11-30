@@ -9,6 +9,8 @@ Next steps are:
 
 -use all png graphics in place of vector-coded graphics :'(
 
+-add hit detection so player will need to avoid falling objects
+
 -make more enemy object-types
 
 -touch controls that turn on if the screen is tapped
