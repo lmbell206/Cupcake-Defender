@@ -10,6 +10,7 @@
 
 var fastcupcake = document.getElementById('fast_cupcake_graphic');
 var slowcupcake = document.getElementById('slow_cupcake_graphic');
+var orange = document.getElementById('orange_graphic');
 
 
 function alien_obj(x,y,color,size, horizontal_distance, vertical_distance) {
@@ -131,27 +132,29 @@ function flower_obj(x,y,color,size) {
 			this.size = this.size + 1;
 		}
 		if (this.dcount < 5) {
-			this.y = this.y + 6;
+			this.y = this.y + 1;
 			this.size = this.size + 2;
 		}
 		this.dcount = this.dcount + 1;
 		if (this.dcount > 45) {
+			items[items.length]= new Missle_obj(this.x,this.y);
 			this.dcount = 0;
 		}
 	};
 	this.draw = function() {
-		ctx.beginPath();
-		ctx.lineWidth = "10px";
-		ctx.strokeStyle = "black";
-		color = randomColor();
-		ctx.fillStyle=color;
-		ctx.fillRect( this.x + (this.size * 3)/8 , this.y + (this.size * 2)/8 , (this.size * 1) / 8 , (this.size * 1) /8 );
-		ctx.fillRect( this.x + (this.size * 1)/8 , this.y + (this.size * 3)/8 , (this.size * 5) / 8 , (this.size * 1) /8 );
-		ctx.fillRect( this.x + (this.size * 2)/8 , this.y + (this.size * 4)/8 , (this.size * 3) / 8 , (this.size * 1) /8 );
-		ctx.fillRect( this.x + (this.size * 1)/8 , this.y + (this.size * 5)/8 , (this.size * 5) / 8 , (this.size * 1) /8 );
-		ctx.fillRect( this.x + (this.size * 2)/8 , this.y + (this.size * 6)/8 , (this.size * 1) / 8 , (this.size * 1) /8 );
-		ctx.fillRect( this.x + (this.size * 4)/8 , this.y + (this.size * 6)/8 , (this.size * 1) / 8 , (this.size * 1) /8 );
-		ctx.stroke();
+		ctx.drawImage(orange, this.x , this.y , this.size , this.size);
+		// ctx.beginPath();
+		// ctx.lineWidth = "10px";
+		// ctx.strokeStyle = "black";
+		// color = randomColor();
+		// ctx.fillStyle=color;
+		// ctx.fillRect( this.x + (this.size * 3)/8 , this.y + (this.size * 2)/8 , (this.size * 1) / 8 , (this.size * 1) /8 );
+		// ctx.fillRect( this.x + (this.size * 1)/8 , this.y + (this.size * 3)/8 , (this.size * 5) / 8 , (this.size * 1) /8 );
+		// ctx.fillRect( this.x + (this.size * 2)/8 , this.y + (this.size * 4)/8 , (this.size * 3) / 8 , (this.size * 1) /8 );
+		// ctx.fillRect( this.x + (this.size * 1)/8 , this.y + (this.size * 5)/8 , (this.size * 5) / 8 , (this.size * 1) /8 );
+		// ctx.fillRect( this.x + (this.size * 2)/8 , this.y + (this.size * 6)/8 , (this.size * 1) / 8 , (this.size * 1) /8 );
+		// ctx.fillRect( this.x + (this.size * 4)/8 , this.y + (this.size * 6)/8 , (this.size * 1) / 8 , (this.size * 1) /8 );
+		// ctx.stroke();
 	};
 }
 

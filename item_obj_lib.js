@@ -1,15 +1,35 @@
 //POWER UP LIBRARY
 //store objects in items{} array
 
+function Missle_obj(x,y) {
+	this.x = x;
+	this.y = y;
+
+	this.hurts = true;
+
+	this.move = function() {
+		this.y = this.y + 10;
+	};
+
+	this.draw = function() {
+		ctx.beginPath();
+		ctx.fillStyle="red";
+		ctx.fillRect(this.x, this.y, 5, 15);
+		ctx.stroke();
+	}
+}
+
 function Heart_obj(x,y) {
 	this.x = x;
 	this.y = y;
-	
+
+	this.hurts = false;
+
 	this.move = function() {
 		this.y = this.y + 5;
 	};
-	
-	this.draw = function() {	
+
+	this.draw = function() {
 		ctx.beginPath();
 		ctx.fillStyle="red";
 		ctx.fillRect(this.x, this.y, 35, 15);

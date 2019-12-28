@@ -60,7 +60,11 @@ margin: 0 auto;
 <div style="display:none;">
   <img id="fast_cupcake_graphic" src="img/fast_cupcake.png">
   <img id="slow_cupcake_graphic" src="img/slow_cupcake.png">
+  <img id="orange_graphic" src="img/orange.jpg">
   <img id="level1background" src="img/level1background.jpg">
+  <img id="level2background" src="img/level2background.jpg">
+  <img id="level3background" src="img/level3background.jpg">
+
 </div>
 
 </body>
@@ -70,6 +74,7 @@ margin: 0 auto;
 <script src="alien_obj_lib.js"></script>
 <script src="player_obj_lib.js"></script>
 <script src="item_obj_lib.js"></script>
+<script src="level_generator.js"></script>
 
 <script>
 // create global 2d context for canvas rendering
@@ -149,16 +154,6 @@ storytext[3] = "Time to take the fight to the cupcakes home planet.  You have la
 
 function freshBackground() {
 	ctx.drawImage(backgroundgraphic,0,0,gamescreenwidth,gamescreenheight)
-	// ctx.beginPath();
-	// ctx.fillStyle="black";
-	// ctx.fillRect(0,0,gamescreenwidth,gamescreenheight-80);
-	// ctx.stroke();
-	// ctx.beginPath();
-	// ctx.strokeStyle="green";
-	// ctx.lineWidth="5";
-	// ctx.fillStyle="green";
-	// ctx.fillRect(0,gamescreenheight-80,gamescreenwidth-10,90);
-	// ctx.stroke();
 
 // draw game info
 	ctx.font = "32px Arial";
@@ -193,6 +188,7 @@ function levelUp() {
 	level++;
 	clearInterval(attackInterval);
 	clearInterval(secondwaveInterval);
+	clearInterval(thirdwaveInterval);
 	clearInterval(gameInterval);
 
 //PUT STORY TRANSITION CODE HERE
@@ -203,56 +199,52 @@ function levelUp() {
 	ctx.font = "24px Arial";
 	ctx.fillStyle="gray";
 	ctx.fillText(storytext[level], 180, 100);
-//	ctx.fillText("           ", 180, 150);
-//	ctx.fillText("           ", 180, 200);
-//	ctx.fillText("           ", 180, 350);
-//	ctx.fillText("           ", 180, 400);
 	ctx.stroke();
 
-
+	setTimeout(generateLevel[level],7000);
 
 
 //set a timeout function to delay the start of the new levels
-	setTimeout(function(){
-		//CREATE CODE FOR EACH LEVEL USING THIS FORMAT
+// 	setTimeout(function(){
+// 		//CREATE CODE FOR EACH LEVEL USING THIS FORMAT
+//
+// 	    //CHANGE BACKGROUND GRAPHIC
+// 			backgroundgraphic = document.getElementById('level1background');
+// 		//create basic aliens
+//
+// 		for (i = 0; i < 5 ;  i++) {
+// 			color_name = randomColor();
+// 			size = randomNumber(35,79);
+// 			horizontal_distance = randomNumber(25,200);
+// 			vertical_distance = randomNumber(3,10);
+// 			aliens[aliens.length] = new alien_obj(i * 120 + 80 ,40, color_name, size, horizontal_distance , vertical_distance);
+// 		}
+//
+// 		//create triangles
+//
+// 		secondwaveInterval = setTimeout (function() {
+// 			size = randomNumber(25,30);
+// 			color_name = randomColor();
+// 			for (i = 0; i < 3 ; i++) {
+// 				aliens[aliens.length] = new triangle_obj(800 - i * 120 ,2, color_name, size, horizontal_distance , 5);
+// 			}
+// 		}, 7000);
+//
+// 		// create flowers
+// 		thirdwaveInterval = setTimeout(function() {
+// 			size = randomNumber(50,80);
+// 			flower_count = 10;
+// 			for (i = 0; i < flower_count; i = i + 1) {
+// 				color_name = randomColor();
+// 				aliens[aliens.length] = new flower_obj(gamescreenwidth-100 - (i* 120), (level * 2), color_name, size);
+// 			}
+// 		}, 14000);
+//
+// 		gameInterval = setInterval(gameLoop, 30);
+// 	}, 5000);
+// }
 
-	    //CHANGE BACKGROUND GRAPHIC
-			backgroundgraphic = document.getElementById('level1background');
-		//create basic aliens
-
-		for (i = 0; i < 5 ;  i++) {
-			color_name = randomColor();
-			size = randomNumber(35,79);
-			horizontal_distance = randomNumber(25,200);
-			vertical_distance = randomNumber(3,10);
-			aliens[aliens.length] = new alien_obj(i * 120 + 80 ,40, color_name, size, horizontal_distance , vertical_distance);
-		}
-
-		//create triangles
-
-		secondwaveInterval = setTimeout (function() {
-			size = randomNumber(25,30);
-			color_name = randomColor();
-			for (i = 0; i < 3 ; i++) {
-				aliens[aliens.length] = new triangle_obj(800 - i * 120 ,2, color_name, size, horizontal_distance , 5);
-			}
-		}, 7000);
-
-		// create flowers
-		thirdwaveInterval = setTimeout(function() {
-			size = randomNumber(50,80);
-			flower_count = 10;
-			for (i = 0; i < flower_count; i = i + 1) {
-				color_name = randomColor();
-				aliens[aliens.length] = new flower_obj(gamescreenwidth-100 - (i* 120), (level * 2), color_name, size);
-			}
-		}, 14000);
-
-		gameInterval = setInterval(gameLoop, 30);
-	}, 5000);
 }
-
-
 
 function gameOverSplash() {
 	this.gradientTargetLoc = 800;
@@ -317,11 +309,8 @@ function game_over() {
 }
 
 function gameLoop() {
-	// refresh game screen
 	freshBackground();
-	// draw player object
 	player.draw();
-	// draw foreground objects
 	freshForeground();
 	// draw all alien objects
 	for (i = 0; i < aliens.length; i++) {
@@ -355,12 +344,9 @@ iosaudio = function(){
 
 window.addEventListener('touchstart',iosaudio);
 
-
-
 function gameStart() {
 
 	launchIntoFullscreen(document.documentElement);
-
 
 	points = 0;
 	backgroundgraphic=document.getElementById('level1background');
@@ -369,6 +355,7 @@ function gameStart() {
 	clearInterval(itemInterval);
 	clearInterval(shotInterval);
 	clearInterval(secondwaveInterval);
+	clearInterval(thirdwaveInterval);
 	freshBackground();
 	ctx.font = "24px Arial";
 	ctx.fillStyle="white";
@@ -377,8 +364,6 @@ function gameStart() {
 	ctx.fillText("  GET  READY!!!! ", 180, 200);
 	ctx.fillText("   ", 180, 350);
 	ctx.fillText("   ", 180, 400);
-
-
 
 	//initialize game engine variables
 
@@ -396,7 +381,6 @@ function gameStart() {
 		// create player object
 		player = new player_obj(400,gamescreenheight-100);
 
-
 		//  set refresh rate of game loop
 		gameInterval = setInterval(gameLoop, 30);
 }
@@ -406,9 +390,13 @@ function gameStart() {
 function hitDetection() {
 	// this requires the hit_detector.js script to be loaded to enable hitCheck function
 	//  hitCheck function returns true if two squares are sharing the same space based on two sets of x y coordinates and side lengths
+
 	// cycle through each item
 	for (i = 0; i < items.length; i++) {
 		if (hitCheck(items[i].x, items[i].y, 50, player.x, player.y, 50)) {
+			if (items[i].hurts){
+				game_over();
+			}
 			items.shift();
 			powerUp();
 			power_up_sound();
@@ -431,8 +419,6 @@ function hitDetection() {
 			};
 			// check if shot has collided with alien
 			if (hitCheck(aliens[i].x, aliens[i].y, aliens[i].size, shots[j].x, shots[j].y, 10)){
-				//play sound based on id of alien
-
 
 				aliens[i].size = aliens[i].size - 10;
 
@@ -457,7 +443,6 @@ function hitDetection() {
 				points = points + 10;
 				//level up if there are no aliens left
 				if (aliens.length == 0 && level < 20) {
-
 					levelUp();
 				}
 				break;
