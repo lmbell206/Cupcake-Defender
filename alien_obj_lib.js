@@ -11,6 +11,7 @@
 var fastcupcake = document.getElementById('fast_cupcake_graphic');
 var slowcupcake = document.getElementById('slow_cupcake_graphic');
 var orange = document.getElementById('orange_graphic');
+var chocolatecake = document.getElementById('chocolatecake_graphic')
 
 
 function alien_obj(x,y,color,size, horizontal_distance, vertical_distance) {
@@ -118,6 +119,7 @@ function triangle_obj(x,y,color,size, horizontal_distance, vertical_distance) {
 // FLOWER OBJECT
 //  MOVES STRAIGHT DOWN SLOWLY
 //  INCREASES IN SIZE OVER TIME
+// shoots missles
 function flower_obj(x,y,color,size) {
 	this.id = "flower";
 	this.x = x;
@@ -137,27 +139,70 @@ function flower_obj(x,y,color,size) {
 		}
 		this.dcount = this.dcount + 1;
 		if (this.dcount > 45) {
-			items[items.length]= new Missle_obj(this.x,this.y);
+			items[items.length]= new Missle_obj(this.x+(this.size/2),this.y);
 			this.dcount = 0;
 		}
 	};
 	this.draw = function() {
 		ctx.drawImage(orange, this.x , this.y , this.size , this.size);
-		// ctx.beginPath();
-		// ctx.lineWidth = "10px";
-		// ctx.strokeStyle = "black";
-		// color = randomColor();
-		// ctx.fillStyle=color;
-		// ctx.fillRect( this.x + (this.size * 3)/8 , this.y + (this.size * 2)/8 , (this.size * 1) / 8 , (this.size * 1) /8 );
-		// ctx.fillRect( this.x + (this.size * 1)/8 , this.y + (this.size * 3)/8 , (this.size * 5) / 8 , (this.size * 1) /8 );
-		// ctx.fillRect( this.x + (this.size * 2)/8 , this.y + (this.size * 4)/8 , (this.size * 3) / 8 , (this.size * 1) /8 );
-		// ctx.fillRect( this.x + (this.size * 1)/8 , this.y + (this.size * 5)/8 , (this.size * 5) / 8 , (this.size * 1) /8 );
-		// ctx.fillRect( this.x + (this.size * 2)/8 , this.y + (this.size * 6)/8 , (this.size * 1) / 8 , (this.size * 1) /8 );
-		// ctx.fillRect( this.x + (this.size * 4)/8 , this.y + (this.size * 6)/8 , (this.size * 1) / 8 , (this.size * 1) /8 );
-		// ctx.stroke();
 	};
 }
 
 function cherry_obj(x,y,droptime) {
 
+}
+
+function chocolatecake_obj(x,y,color,size, horizontal_distance, vertical_distance) {
+	this.id = "chocolatecake";
+	this.x = x;
+	this.y = y;
+	this.color = color;
+	this.size = 0;
+	this.horizontal_distance = horizontal_distance;
+	this.vertical_distance = vertical_distance;
+	this.horizontal_speed = 3;
+	this.vertical_speed = 2;
+	this.lcount = 0;
+	this.rcount = 0;
+	this.dcount = 0;
+	this.sizetarget = size;
+	this.shootfrequency = 50;
+	this.shoottimer = 0;
+
+	this.move = function(){
+		if (this.size < this.sizetarget) {
+			this.size = this.size + 1;
+		}
+		if (this.lcount < this.horizontal_distance) {
+			this.x = this.x - this.horizontal_speed;
+			this.y = this.y + this.vertical_speed;
+			this.lcount = this.lcount + 1;
+		} else if (this.rcount < this.horizontal_distance) {
+			this.x = this.x + this.horizontal_speed;
+			this.y = this.y + this.vertical_speed;
+			this.rcount = this.rcount + 1;
+		} else {
+			this.lcount = 0;
+			this.rcount = 0;
+			this.dcount = 0;
+		}
+		if (this.x < 0) {
+			this.x = 0;
+			this.rcount = 0;
+			this.lcount = this.horizontal_distance;
+		}
+		if (this.x > 960 - this.size) {
+			this.x = 960 - this.size;
+			this.lcount = 0;
+			this.rcount = this.horizontal_distance;
+		}
+		this.shoottimer = this.shoottimer + 1;
+		if (this.shoottimer == this.shootfrequency){
+			items[items.length]= new Missle_obj(this.x+(this.size/2),this.y);
+			this.shoottimer = 0;
+		}
+	};
+	this.draw = function() {
+		ctx.drawImage(chocolatecake, this.x , this.y , this.size , this.size)
+	};
 }

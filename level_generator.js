@@ -39,9 +39,48 @@ generateLevel[3]=function() {
         size = 30;
         color_name = randomColor();
         for (i = 0; i < 3 ; i++) {
-            aliens[aliens.length] = new triangle_obj(800 - i * 120 ,2, color_name, size, 15 , 5);
+            aliens[aliens.length] = new triangle_obj(800 - i * 120 ,2, color_name, size, 10 , 3);
         }
     }, 4000);
+
+    thirdwaveInterval = setTimeout (function() {
+        size = 30;
+        color_name = randomColor();
+        for (i = 0; i < 3 ; i++) {
+            aliens[aliens.length] = new triangle_obj(800 - i * 120 ,2, color_name, size, 30 , 3);
+        }
+    }, 4000);
+
+    gameInterval = setInterval(gameLoop, 30);
+}
+
+generateLevel[4]=function() {
+
+    backgroundgraphic = document.getElementById('level4background');
+
+    for (i = 0; i < 5 ;  i++) {
+        color_name = randomColor();
+        size = randomNumber(35,79);
+        horizontal_distance = randomNumber(50,200);
+        vertical_distance = randomNumber(5,10);
+        aliens[aliens.length] = new chocolatecake_obj(i * 120 + 80 ,40, color_name, size, horizontal_distance , vertical_distance);
+    }
+
+    secondwaveInterval = setTimeout (function() {
+        size = 30;
+        color_name = randomColor();
+        for (i = 0; i < 5 ; i++) {
+            aliens[aliens.length] = new triangle_obj(700 - i * 120 ,2, color_name, size, 15 , 8);
+        }
+    }, 8000);
+
+    thirdwaveInterval = setTimeout (function() {
+        size = 50;
+        color_name = randomColor();
+        for (i = 0; i < 5 ; i++) {
+            aliens[aliens.length] = new flower_obj(800 - i * 120 ,2, color_name, size, 10 , 5);
+        }
+    }, 8000);
 
     gameInterval = setInterval(gameLoop, 30);
 }

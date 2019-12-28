@@ -4,6 +4,7 @@
 function Missle_obj(x,y) {
 	this.x = x;
 	this.y = y;
+	this.size = 5;
 
 	this.hurts = true;
 
@@ -22,6 +23,7 @@ function Missle_obj(x,y) {
 function Heart_obj(x,y) {
 	this.x = x;
 	this.y = y;
+	this.size = 35;
 
 	this.hurts = false;
 
