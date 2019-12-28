@@ -7,7 +7,7 @@ function player_obj(x,y) {
 	this.x = x;
 	this.y = y;
 	this.maxshots = 0;
-	this.speed = 4;
+	this.speed = 5;
 	this.moveLeft = function() {
 		this.x = this.x -this.speed;
 	};
@@ -56,7 +56,6 @@ function newShot() {
 
 	if (shots.length <= player.maxshots) {
 		shot_sound();
-		shots[shots.length] = new laser_obj(player.x + 20,player.y+10);  
+		shots[shots.length] = new laser_obj(player.x + 20,player.y+10);
 	}
 }
-	

@@ -111,7 +111,7 @@ ctx.fillText("  SAVE  YOUR  PLANET  FROM  THE  CUPCAKES!!!!!!!", 180, 100);
 ctx.fillText("            P KEY OR TAP SCREEN TO PLAY", 180, 150);
 ctx.fillText("ARROW KEYS OR PRESS YELLOW BUTTONS TO MOVE", 180, 200);
 ctx.fillText("   SPACEBAR OR ORANGE BUTTON TO SHOOT", 180, 350);
-ctx.fillText("   HEARTS INCREASE SPEED AND FIREPOWER", 180, 400);
+// ctx.fillText("   HEARTS INCREASE SPEED AND FIREPOWER", 180, 400);
 
 // set up game engine variables
 
@@ -146,10 +146,11 @@ var high_score = 1000;
 
 var storytext = [];
 
-storytext[0] = "Cupcakes are attacking the VeggieVille!";
+storytext[0] = "Cupcakes are attacking VeggieVille!";
 storytext[1] = "Protect your town from the destruction of simple carbohydrates\!";
-storytext[2] = "The first wave of cupcakes is vanquished, but more are coming. \n The battle is not over, watch out for incoming cones\!";
-storytext[3] = "Time to take the fight to the cupcakes home planet.  You have landed on a sea of frosting, The elite Pie Guard forces are defending Cupcake Castle!";
+storytext[2] = "Excellent!  The first wave of cupcakes is vanquished!";
+storytext[3] = "Nice!  Time to take the fight to the cupcakes' home planet!"
+storytext[4] = "Awesome!  The elite Pie Guard forces are defending Cupcake Castle!";
 
 // I could have the freshBackground function mutable from a series of functions to set different
 // level backgrounds
@@ -158,11 +159,11 @@ function freshBackground() {
 	ctx.drawImage(backgroundgraphic,0,0,gamescreenwidth,gamescreenheight)
 
 // draw game info
-	ctx.font = "32px Arial";
-	ctx.fillStyle="gray";
-	ctx.fillText("HIGH SCORE: " + high_score, 15, 50);
-	ctx.fillText("SCORE: " + points, gamescreenwidth-250, 50);
-	ctx.stroke();
+	// ctx.font = "32px Arial";
+	// ctx.fillStyle="gray";
+	// ctx.fillText("HIGH SCORE: " + high_score, 15, 50);
+	// ctx.fillText("SCORE: " + points, gamescreenwidth-250, 50);
+	// ctx.stroke();
 }
 
 function freshForeground() {
@@ -200,7 +201,8 @@ function levelUp() {
 	ctx.stroke();
 	ctx.font = "24px Arial";
 	ctx.fillStyle="gray";
-	ctx.fillText(storytext[level], 180, 100);
+	ctx.fillText(storytext[level], 80, 100);
+
 	ctx.stroke();
 
 	setTimeout(generateLevel[level],7000);
@@ -352,6 +354,8 @@ function gameStart() {
 
 	points = 0;
 	backgroundgraphic=document.getElementById('level1background');
+	backgroundmusic.src = 'snd/level1music.m4a';
+	backgroundmusic.play();
 	clearInterval(gameInterval);
 	clearInterval(attackInterval);
 	clearInterval(itemInterval);
@@ -377,8 +381,8 @@ function gameStart() {
 		game_status = "on";
 
 		//create first wave of basic aliens
-		for (i = 0; i < 5; i++) {
-			aliens[i] = new alien_obj(i * 140 + 300 ,120, "green", 60,50, 4);
+		for (i = 0; i < 8; i++) {
+			aliens[i] = new alien_obj(i * 140,20, "green", 30,75, 1);
 		}
 		// create player object
 		player = new player_obj(400,gamescreenheight-100);

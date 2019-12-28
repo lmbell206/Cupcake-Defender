@@ -76,7 +76,7 @@ function triangle_obj(x,y,color,size, horizontal_distance, vertical_distance) {
 	this.horizontal_distance = horizontal_distance;
 	this.vertical_distance = vertical_distance;
 	this.horizontal_speed = 2;
-	this.vertical_speed = 1;
+	this.vertical_speed = .3;
 	this.lcount = 0;
 	this.rcount = 0;
 	this.dcount = 0;
@@ -133,12 +133,12 @@ function flower_obj(x,y,color,size) {
 		if (this.size < this.sizetarget) {
 			this.size = this.size + 1;
 		}
-		if (this.dcount < 5) {
-			this.y = this.y + 1;
-			this.size = this.size + 2;
+		if (this.dcount < 10) {
+			this.y = this.y + 3;
+			this.size = this.size + 1;
 		}
 		this.dcount = this.dcount + 1;
-		if (this.dcount > 45) {
+		if (this.dcount > 150) {
 			items[items.length]= new Missle_obj(this.x+(this.size/2),this.y);
 			this.dcount = 0;
 		}
@@ -161,7 +161,7 @@ function chocolatecake_obj(x,y,color,size, horizontal_distance, vertical_distanc
 	this.horizontal_distance = horizontal_distance;
 	this.vertical_distance = vertical_distance;
 	this.horizontal_speed = 3;
-	this.vertical_speed = 2;
+	this.vertical_speed = .5;
 	this.lcount = 0;
 	this.rcount = 0;
 	this.dcount = 0;

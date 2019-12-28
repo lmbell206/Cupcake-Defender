@@ -9,7 +9,7 @@ function Missle_obj(x,y) {
 	this.hurts = true;
 
 	this.move = function() {
-		this.y = this.y + 10;
+		this.y = this.y + 6;
 	};
 
 	this.draw = function() {
