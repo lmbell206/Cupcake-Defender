@@ -399,7 +399,7 @@ function hitDetection() {
 
 	// cycle through each item
 	for (i = 0; i < items.length; i++) {
-		if (hitCheck(items[i].x, items[i].y, 50, player.x, player.y, 50)) {
+		if (hitCheck(items[i].x, items[i].y, items[i].size, player.x, player.y, 50)) {
 			if (items[i].hurts){
 				game_over();
 			}

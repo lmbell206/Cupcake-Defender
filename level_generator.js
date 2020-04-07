@@ -19,7 +19,7 @@ generateLevel[2]= function() {
         horizontal_distance = randomNumber(25,300);
         vertical_distance = randomNumber(2,3);
         for (i = 0; i < 5 ; i++) {
-            aliens[aliens.length] = new triangle_obj(i * 120 ,-250, color_name, size, 10 , 3);
+            aliens[aliens.length] = new triangle_obj(i * 120 ,-250, color_name, size, 300 , 3);
         }
     }, 1000);
 
@@ -62,7 +62,7 @@ generateLevel[3]=function() {
         size = 30;
         color_name = randomColor();
         for (i = 0; i < 6 ; i++) {
-            aliens[aliens.length] = new triangle_obj(800 - i * 120 ,-300, color_name, size, 30 , 3);
+            aliens[aliens.length] = new triangle_obj(800 - i * 120 ,-300, color_name, size, 200, 5);
         }
     }, 2000);
 
