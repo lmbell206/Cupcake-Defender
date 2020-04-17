@@ -102,3 +102,8 @@ generateLevel[4]=function() {
 
     gameInterval = setInterval(gameLoop, 30);
 }
+
+generateLevel[5] = function(){
+    aliens[aliens.length]=new boss_obj();
+    gameInterval = setInterval(gameLoop, 30);
+}

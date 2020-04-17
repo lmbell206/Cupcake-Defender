@@ -66,6 +66,11 @@ margin: 0 auto;
   <img id="level2background" src="img/level2background.jpg">
   <img id="level3background" src="img/level3background.jpg">
   <img id="level4background" src="img/level4background.jpg">
+  <img id="almostdefeated_graphic" src="img/almostdefeated_graphic.jpg">
+  <img id="boss_graphic" src="img/boss_graphic.jpg">
+  <img id="gothit_graphic" src="img/gothit_graphic.jpg">
+  <img id="regular_graphic" src="img/regular_graphic.jpg">
+  <img id="goingtoshoot_graphic" src="img/goingtoshoot_graphic.png">
 
 </div>
 
@@ -151,6 +156,7 @@ storytext[1] = "Protect your town from the destruction of simple carbohydrates\!
 storytext[2] = "Excellent!  The first wave of cupcakes is vanquished!";
 storytext[3] = "Nice!  Time to take the fight to the cupcakes' home planet!"
 storytext[4] = "Awesome!  The elite Pie Guard forces are defending Cupcake Castle!";
+storytext[5] = "King Cake is maaaaaad!";
 
 // I could have the freshBackground function mutable from a series of functions to set different
 // level backgrounds
@@ -336,6 +342,28 @@ function gameLoop() {
 
 }
 
+function victory() {
+	clearInterval(attackInterval);
+	clearInterval(secondwaveInterval);
+	clearInterval(thirdwaveInterval);
+	clearInterval(gameInterval);
+
+	ctx.beginPath();
+	ctx.fillStyle="black";
+	ctx.fillRect(0,0,gamescreenwidth,gamescreenheight);
+	ctx.stroke();
+	ctx.font = "24px Arial";
+	ctx.fillStyle="gray";
+	ctx.fillText("VICTORY", 80, 100);
+	ctx.stroke();
+	victoryInterval = setInterval(function(){
+		randomx = randomNumber(0,960);
+		randomy = randomNumber(0,600);
+		ctx.fillText("VICTORY",randomx, randomy);
+		ctx.stroke();
+	},1000);
+
+}
 
 iosaudio = function(){
 	var buffer = audioCtx.createBuffer(1, 1, 22050);
@@ -426,9 +454,14 @@ function hitDetection() {
 			// check if shot has collided with alien
 			if (hitCheck(aliens[i].x, aliens[i].y, aliens[i].size, shots[j].x, shots[j].y, 10)){
 
-				aliens[i].size = aliens[i].size - 10;
+				if (aliens[i].id == 'bosscake'){
+					aliens[i].gethit();
+				} else {
+					aliens[i].size = aliens[i].size - 10;
+				};
 
 				aliens[i].sizetarget = aliens[i].sizetarget - 9;
+
 				if (aliens[i].id == "triangle"){
 					triangle_sound(2000 - aliens[i].size * 25);
 				} else if (aliens[i].id == "flower"){
@@ -549,7 +582,10 @@ document.addEventListener("DOMContentLoaded", function(event) {
 		} else if (event.which == 84) { //letter t
 			aliensToTriangle();
 		} else if (event.which == 70) { //letter a
-			aliensToFlower();
+			//aliensToFlower();
+			clearInterval(gameInterval);
+			level = 4;
+			levelUp();
 		}
 	});
 
