@@ -20,6 +20,28 @@ function Missle_obj(x,y) {
 	}
 }
 
+function Guided_Missle_obj(x,y,aim) {
+	this.x = x;
+	this.y = y;
+	this.size = 10;
+	this.aim = aim;
+
+	this.hurts = true;
+
+	this.move = function() {
+		this.y = this.y + 10;
+		this.x = this.x + this.aim*9;
+	};
+
+	this.draw = function() {
+		ctx.beginPath();
+		ctx.fillStyle="red";
+		ctx.fillRect(this.x, this.y, 5, 15);
+		ctx.stroke();
+	}
+}
+
+
 function Heart_obj(x,y) {
 	this.x = x;
 	this.y = y;

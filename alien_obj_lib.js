@@ -260,7 +260,8 @@ function boss_obj(){
 			this.eyes = goingtoshoot;
 		}
 		if (this.shoottimer == this.shootfrequency){
-			items[items.length]= new Missle_obj(this.x+(this.size/2),this.y);
+			var aim = (player.x-this.x+(this.size/2))/(player.y+50-this.y);
+			items[items.length]= new Guided_Missle_obj(this.x+(this.size/2),this.y,aim);
 			this.shoottimer = 0;
 			this.eyes = regular;
 		}

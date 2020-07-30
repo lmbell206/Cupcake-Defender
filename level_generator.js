@@ -1,4 +1,20 @@
 var generateLevel = [];
+
+generateLevel[1]= function(){
+    backgroundgraphic=document.getElementById('level1background');
+    backgroundmusic.pause();
+	backgroundmusic.src = 'snd/level1music.m4a';
+	backgroundmusic.play();
+
+    for (i = 0; i < 8; i++) {
+        aliens[i] = new alien_obj(i * 140,20, "green", 30,75, 1);
+    }
+
+    gameInterval = setInterval(gameLoop, 30);
+};
+
+
+
 generateLevel[2]= function() {
 
     backgroundgraphic = document.getElementById('level2background');
